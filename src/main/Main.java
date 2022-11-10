@@ -8,12 +8,12 @@ public class Main {
 		boolean bool =true;
 		while(bool) {
 			
-//			System.out.println("성&동ATM");
-//			System.out.println("1.입금");
-//			System.out.println("2.출금");
-//			System.out.println("3.통장정리");
-//			System.out.println("4.계좌송금");
-//			System.out.println("5.분실신고");
+			System.out.println("성&동ATM");
+			System.out.println("1.입금");
+			System.out.println("2.출금");
+			System.out.println("3.통장정리");
+			System.out.println("4.계좌송금");
+			System.out.println("5.분실신고");
 			
 			String[] service_list= {
 					"1.입금/출금",
