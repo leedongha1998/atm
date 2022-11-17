@@ -1,11 +1,15 @@
 package main;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
 	private String name;
 	private String age;
 	private String accountNumber;
 	private int accountPassword;
 	
+	Map<String,Integer> userMap = new HashMap<>();
 	public User(){
 		
 	}
