@@ -11,6 +11,10 @@ public class Main {
 
 	
 	public static void main(String[] args) {	
+		User user = new User();
+		user.userMap.put("임성현", 1234);
+		System.out.println(user.userMap);
+		
 		
 		boolean bool =true;
 		bankAccountNumber.add("010-250702-87307");
@@ -23,7 +27,8 @@ public class Main {
 					"1.입금/출금",
 					"2.통장정리",
 					"3.계좌송금",
-					"4.분실신고"
+					"4.분실신고",
+					"5.회원가입"
 			};
 
 			String[] DW_1= {
@@ -123,8 +128,22 @@ public class Main {
 				System.out.println("분실신고");
 				break;
 			}
+			case "5.회원가입":
+			{
+				String name=JOptionPane.showInputDialog(null,"이름입력창","이름을 입력하시오.");
+				if(user.userMap.containsKey(name)) {
+					JOptionPane.showMessageDialog(null, "이미 가입된 회원입니다.");
+					user.setName(JOptionPane.showInputDialog(null,"이름입력창","이름을 입력하시오."));
+					
+				}else {
+					System.out.println("회원가입 시작합니다.");
+					user.setName(JOptionPane.showInputDialog(null,"이름입력창","이름을 입력하시오."));
+					user.setAccountPassword(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호","비밀번호를 입력하시오.")));
+					user.userMap.put(user.getName(), user.getAccountPassword());
+				}
+			}
 		}	
-
+			System.out.println(user.userMap);
 			bool=false;
 	}
 	
