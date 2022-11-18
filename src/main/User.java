@@ -1,19 +1,19 @@
 package main;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class User {
 	private String name;
-	private String age;
+	private int age;
 	private String accountNumber;
 	private int accountPassword;
 	
-	Map<String,Integer> userMap = new HashMap<>();
+	ArrayList<User> userInfos = new ArrayList<>();
+	
 	public User(){
 		
 	}
-	public User(String name,String age,String accountNumber,int accountPassword) {
+	public User(String name,int age,String accountNumber,int accountPassword) {
 		this.name=name;
 		this.age=age;
 		this.accountNumber=accountNumber;
@@ -22,7 +22,7 @@ public class User {
 	public String getName() {
 		return name;
 	}
-	public String getAge() {
+	public int getAge() {
 		return age;
 	}
 	public String getAccountNumber() {
@@ -34,7 +34,7 @@ public class User {
 	public void setName(String name) {
 		this.name=name;
 	}
-	public void setAge(String age) {
+	public void setAge(int age) {
 		this.age=age;
 	}
 	public void setAccountNumber(String accountNumber) {
@@ -42,6 +42,14 @@ public class User {
 	}
 	public void setAccountPassword(int accountPassword) {
 		this.accountPassword=accountPassword;
+	}
+	public String createAccountNum() {
+		StringBuilder sb = new StringBuilder();
+		for (int i=0;i<14;i++) {
+			sb.append((int) (Math.random()*10));
+		}
+		return sb.toString();
+		
 	}
 	
 }
