@@ -6,19 +6,16 @@ import javax.swing.JOptionPane;
 
 public class Main {
 	
-	public static ArrayList<String> bankAccountNumber=new ArrayList<String>();
-	public static ArrayList<String> bankAccountPassword=new ArrayList<String>();
+
 
 	
 	public static void main(String[] args) {	
 		User user = new User();
-		user.userMap.put("임성현", 1234);
-		System.out.println(user.userMap);
+		
+		
 		
 		
 		boolean bool =true;
-		bankAccountNumber.add("010-250702-87307");
-		bankAccountPassword.add("7244");
 		while(bool) {
 
 
@@ -72,10 +69,10 @@ public class Main {
 			        {
 			        case 0:{
 			        		String accountNum=JOptionPane.showInputDialog(null,"계좌번호입력창","***-******-***** 형식으로 입력하시오.");
-			        		if(bankAccountNumber.contains(accountNum)) {
-			        			String accountPass=JOptionPane.showInputDialog(null,"비밀번호입력창","비밀번호 4자리를 입력하시오.");
-			        			if(bankAccountPassword.contains(accountPass)) {
-			        				
+			        		if(user.getAccountNumber().contains(accountNum)) {
+			        			int accountPass=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호입력창","비밀번호 4자리를 입력하시오.")));
+			        			if(user.getAccountPassword()==accountPass) {
+			        				System.out.println("만세");
 			        			}
 			        		}else {
 			        			System.out.println("비밀번호가 틀렸습니다.");
@@ -129,24 +126,25 @@ public class Main {
 				break;
 			}
 			case "5.회원가입":
-			{
+			{	
+				
 				String name=JOptionPane.showInputDialog(null,"이름입력창","이름을 입력하시오.");
-				if(user.userMap.containsKey(name)) {
-					JOptionPane.showMessageDialog(null, "이미 가입된 회원입니다.");
-					user.setName(JOptionPane.showInputDialog(null,"이름입력창","이름을 입력하시오."));
-					
-				}else {
-					System.out.println("회원가입 시작합니다.");
-					user.setName(JOptionPane.showInputDialog(null,"이름입력창","이름을 입력하시오."));
-					user.setAccountPassword(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호","비밀번호를 입력하시오.")));
-					user.userMap.put(user.getName(), user.getAccountPassword());
-				}
+				int age=(Integer.parseInt(JOptionPane.showInputDialog(null,"나이입력창","나이를 입력하시오.")));
+				String account=user.createAccountNum();
+				JOptionPane.showInternalMessageDialog(null, "새로운 계좌번호는 "+account+" 입니다,", "계좌번호창",JOptionPane.PLAIN_MESSAGE );
+				int password=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호","원하시는 비밀번호를 입력하시오.")));
+				User user2 = new User(name, age, account, password);
+				user.userInfos.add(user2);
 			}
+			
 		}	
-			System.out.println(user.userMap);
+			
 			bool=false;
 	}
 	
-  }
+		for(User u:user.userInfos) {
+			System.out.println(u);
+		}
+ }
+	
 }
-
