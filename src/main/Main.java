@@ -11,8 +11,8 @@ public class Main {
 	
 	public static void main(String[] args) {	
 		User user = new User();
-		
-		
+		User user1= new User("임성현", 25, "12345678912345", 1121);
+		user.userInfos.add(user1);
 		
 		
 		boolean bool =true;

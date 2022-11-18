@@ -43,6 +43,12 @@ public class User {
 	public void setAccountPassword(int accountPassword) {
 		this.accountPassword=accountPassword;
 	}
+	
+	@Override
+	public String toString() {
+		return "User [name=" + name + ", age=" + age + ", accountNumber=" + accountNumber + ", accountPassword="
+				+ accountPassword +"]";
+	}
 	public String createAccountNum() {
 		StringBuilder sb = new StringBuilder();
 		for (int i=0;i<14;i++) {
