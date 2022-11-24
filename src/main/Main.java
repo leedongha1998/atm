@@ -13,6 +13,9 @@ public class Main {
 		User user = new User();
 		User user1 = new User("하나은행", 1000, 0, 0, "임성현", 25, "12345678912345", 1234, null);
 		user.userInfos.add(user1);
+		Hana hana= new Hana();
+		Gookmin gookmin= new Gookmin();
+		Sinhan sinhan= new Sinhan();
 		
 		
 		boolean bool =true;
@@ -62,7 +65,7 @@ public class Main {
 				{
 				case "1.입금":
 				{
-					String[] buttons = {"하나은행", "국민은행", "신한은행", "우리은행","기업은행","그 외 은행"};
+					String[] buttons = {"하나은행", "국민은행", "신한은행","그 외 은행"};
 			        int num = JOptionPane.showOptionDialog(null, "사용하시는 은행을 선택하십시오.", "신원확인창.",
 			                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, buttons, "하나은행");
 			        switch(num)
@@ -75,56 +78,148 @@ public class Main {
 			        			if(user1.getAccountPassword()==accountPass) {
 			        				long deposit=(Long.parseLong(JOptionPane.showInputDialog(null,"입금액","입금하실 금액을 입력하시오.")));
 			        				 user1.setBalance(user1.getBalance()+deposit); 
-			        				 System.out.println(user1.getBalance());
+			        				 JOptionPane.showInternalMessageDialog(null, "잔액은 "+user1.getBalance()+"원 입니다.", "안내창",JOptionPane.PLAIN_MESSAGE );
+			        				 break;
+			        			}else {
+			        				JOptionPane.showInternalMessageDialog(null, "입력하신 정보가 틀렸습니다.", "경고창",JOptionPane.PLAIN_MESSAGE );
+					        		break;
 			        			}
 			        		}else {
-			        			
+			        			JOptionPane.showInternalMessageDialog(null, "입력하신 정보가 틀렸습니다.", "경고창",JOptionPane.PLAIN_MESSAGE );
 			        			break;
 			        		}
-			        		
-			        		}
+			        }
 			        //국민은행
 			        case 1:{
-			        	break;
+			        	String accountNum=JOptionPane.showInputDialog(null,"계좌번호입력창","***-******-***** 형식으로 입력하시오.");
+		        		if(user1.getAccountNumber().contains(accountNum)) {
+		        			int accountPass=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호입력창","비밀번호 4자리를 입력하시오.")));
+		        			if(user1.getAccountPassword()==accountPass) {
+		        				long deposit=(Long.parseLong(JOptionPane.showInputDialog(null,"입금액","입금하실 금액을 입력하시오.")));
+		        				 user1.setBalance(user1.getBalance()+deposit); 
+		        				 JOptionPane.showInternalMessageDialog(null, "잔액은 "+user1.getBalance()+"원 입니다.", "안내창",JOptionPane.PLAIN_MESSAGE );
+		        				 break;
+		        			}else {
+		        				JOptionPane.showInternalMessageDialog(null, "입력하신 정보가 틀렸습니다.", "경고창",JOptionPane.PLAIN_MESSAGE );
+				        		break;
+		        			}
+		        		}else {
+		        			JOptionPane.showInternalMessageDialog(null, "입력하신 정보가 틀렸습니다.", "경고창",JOptionPane.PLAIN_MESSAGE );
+		        			break;
+		        		}
 	        		}
 			        //신한은행
 			        case 2:{
-			        	break;
-	        		}
-			        //우리은행
-			        case 3:{
-			        	break;
-	        		}
-			        //기업은행
-			        case 4:{
-			        	break;
+			        	String accountNum=JOptionPane.showInputDialog(null,"계좌번호입력창","***-******-***** 형식으로 입력하시오.");
+		        		if(user1.getAccountNumber().contains(accountNum)) {
+		        			int accountPass=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호입력창","비밀번호 4자리를 입력하시오.")));
+		        			if(user1.getAccountPassword()==accountPass) {
+		        				long deposit=(Long.parseLong(JOptionPane.showInputDialog(null,"입금액","입금하실 금액을 입력하시오.")));
+		        				 user1.setBalance(user1.getBalance()+deposit); 
+		        				 JOptionPane.showInternalMessageDialog(null, "잔액은 "+user1.getBalance()+"원 입니다.", "안내창",JOptionPane.PLAIN_MESSAGE );
+		        				 break;
+		        			}else {
+		        				JOptionPane.showInternalMessageDialog(null, "입력하신 정보가 틀렸습니다.", "경고창",JOptionPane.PLAIN_MESSAGE );
+				        		break;
+		        			}
+		        		}else {
+		        			JOptionPane.showInternalMessageDialog(null, "입력하신 정보가 틀렸습니다.", "경고창",JOptionPane.PLAIN_MESSAGE );
+		        			break;
+		        		}
 	        		}
 			        //그 외
-			        case 5:{
-			        	System.out.println("성&동 ATM에서 지원하지않는 은행사 입니다.\n다음에 다시 방문해주세요.");
+			        case 3:{
+			        	JOptionPane.showInternalMessageDialog(null, "성&동 ATM에서 지원하지않는 은행사 입니다.\n다음에 다시 방문해주세요.", "안내창",JOptionPane.PLAIN_MESSAGE );
 	        		}
 			      }
 					break;					
 				}
 				case "2.출금":{
-					String accountNum=JOptionPane.showInputDialog(null,"계좌번호입력창","***-******-***** 형식으로 입력하시오.");
-	        		if(user1.getAccountNumber().contains(accountNum)) {
-	        			int accountPass=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호입력창","비밀번호 4자리를 입력하시오.")));
-	        			if(user1.getAccountPassword()==accountPass) {
-	        				long withdrawal=(Long.parseLong(JOptionPane.showInputDialog(null,"출금액","출금하실 금액을 입력하시오.")));
-	        				
-	        				if(user1.getBalance()<withdrawal) {
-	        					System.out.println("잔액이 부족합니다.");
-	        				}else {
-	        						user1.setBalance(user1.getBalance()-withdrawal);
-	        						System.out.println(user1.getBalance());
-	        				}
-	        				}
-	        			}
+					String[] buttons = {"하나은행", "국민은행", "신한은행","그 외 은행"};
+					 int num = JOptionPane.showOptionDialog(null, "사용하시는 은행을 선택하십시오.", "신원확인창.",
+				                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, buttons, "하나은행");
+			        switch(num)
+			        {
+			        //하나은행
+			        case 0:{
+			        	String accountNum=JOptionPane.showInputDialog(null,"계좌번호입력창","***-******-***** 형식으로 입력하시오.");
+			        if(user1.getAccountNumber().contains(accountNum)) {
+			        	int accountPass=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호입력창","비밀번호 4자리를 입력하시오.")));
+			        	if(user1.getAccountPassword()==accountPass) {
+			        		long withdrawal=(Long.parseLong(JOptionPane.showInputDialog(null,"출금액","출금하실 금액을 입력하시오.")));
+			        		
+			        		if(user1.getBalance()<withdrawal) {
+			        			 JOptionPane.showInternalMessageDialog(null, "잔액이 부족합니다.", "안내창",JOptionPane.PLAIN_MESSAGE );
+			        		}else {
+			        				user1.setBalance((long) (user1.getBalance()-(withdrawal*(1+hana.getCommission()))));
+			        				JOptionPane.showInternalMessageDialog(null, "잔액은 "+user1.getBalance()+"원 입니다.", "안내창",JOptionPane.PLAIN_MESSAGE );
+			        				break;
+			        		}
+			        		}else {
+			        			JOptionPane.showInternalMessageDialog(null, "입력하신 정보가 틀렸습니다.", "경고창",JOptionPane.PLAIN_MESSAGE );
+				        		break;
+			        		}
+			        	}else {
+			        		JOptionPane.showInternalMessageDialog(null, "입력하신 정보가 틀렸습니다.", "경고창",JOptionPane.PLAIN_MESSAGE );
+			        		break;
+			        	}
+			        }
+			        //국민은행
+			        case 1:{
+			        	String accountNum=JOptionPane.showInputDialog(null,"계좌번호입력창","***-******-***** 형식으로 입력하시오.");
+				        if(user1.getAccountNumber().contains(accountNum)) {
+				        	int accountPass=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호입력창","비밀번호 4자리를 입력하시오.")));
+				        	if(user1.getAccountPassword()==accountPass) {
+				        		long withdrawal=(Long.parseLong(JOptionPane.showInputDialog(null,"출금액","출금하실 금액을 입력하시오.")));
+			        	if(user1.getBalance()<withdrawal) {
+			        		JOptionPane.showInternalMessageDialog(null, "잔액이 부족합니다.", "안내창",JOptionPane.PLAIN_MESSAGE );
+			        	}else {
+			        		user1.setBalance((long) (user1.getBalance()-(withdrawal*(1+gookmin.getCommission()))));
+			        		JOptionPane.showInternalMessageDialog(null, "잔액은 "+user1.getBalance()+"원 입니다.", "안내창",JOptionPane.PLAIN_MESSAGE );
+	        				break;
+			        			}
+				        	}else {
+				        		JOptionPane.showInternalMessageDialog(null, "입력하신 정보가 틀렸습니다.", "경고창",JOptionPane.PLAIN_MESSAGE );
+				        		break;
+				        	}
+				        }else {
+				        	JOptionPane.showInternalMessageDialog(null, "입력하신 정보가 틀렸습니다.", "경고창",JOptionPane.PLAIN_MESSAGE );
+				        	break;
+				        }
+			        }
+			        //신한은행
+			        case 2:{
+			        	String accountNum=JOptionPane.showInputDialog(null,"계좌번호입력창","***-******-***** 형식으로 입력하시오.");
+				        if(user1.getAccountNumber().contains(accountNum)) {
+				        	int accountPass=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호입력창","비밀번호 4자리를 입력하시오.")));
+				        	if(user1.getAccountPassword()==accountPass) {
+				        		long withdrawal=(Long.parseLong(JOptionPane.showInputDialog(null,"출금액","출금하실 금액을 입력하시오.")));
+				        		if(user1.getBalance()<withdrawal) {
+				        			JOptionPane.showInternalMessageDialog(null, "잔액이 부족합니다.", "안내창",JOptionPane.PLAIN_MESSAGE );
+				        		}else {
+				        			user1.setBalance((long) (user1.getBalance()-(withdrawal*(1+sinhan.getCommission()))));
+				        			JOptionPane.showInternalMessageDialog(null, "잔액은 "+user1.getBalance()+"원 입니다.", "안내창",JOptionPane.PLAIN_MESSAGE );
+			        				break;
+				        		}
+				        	}else {
+				        		JOptionPane.showInternalMessageDialog(null, "입력하신 정보가 틀렸습니다.", "경고창",JOptionPane.PLAIN_MESSAGE );
+				        		break;
+				        	}
+				        }else {
+				        	JOptionPane.showInternalMessageDialog(null, "입력하신 정보가 틀렸습니다.", "경고창",JOptionPane.PLAIN_MESSAGE );
+				        	break;
+				        }
+			        }
+			        //그 외
+			        case 3:{
+			        	JOptionPane.showInternalMessageDialog(null, "성&동 ATM에서 지원하지않는 은행사 입니다.\n다음에 다시 방문해주세요.", "안내창",JOptionPane.PLAIN_MESSAGE );
+			        	break;
+	        		}
+			      }
 				}
 				case "3.뒤로가기":
 				{
-					System.out.println("방문해주셔서 감사합니다.\n 다음에 다시 방문해주세요.");
+					JOptionPane.showInternalMessageDialog(null, "방문해주셔서 감사합니다.\n 다음에 다시 방문해주세요.", "안내창",JOptionPane.PLAIN_MESSAGE );
 					break;
 				}
 				}
@@ -169,3 +264,26 @@ public class Main {
  }
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

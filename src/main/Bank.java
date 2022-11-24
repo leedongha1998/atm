@@ -5,7 +5,7 @@ public class Bank {
 	private long balance; //잔액
 	private long deposit;//입금액
 	private long withdrawal;//출금액
-	private double commission;//수수료
+	
 
 	public Bank() {
 		super();
