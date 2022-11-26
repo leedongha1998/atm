@@ -12,7 +12,10 @@ public class Main {
 	public static void main(String[] args) {	
 		User user = new User();
 		User user1 = new User("하나은행", 1000, 0, 0, "임성현", 25, "12345678912345", 1234, null);
+		User user3 = new User("하나은행", 12000, 0, 0, "이동하", 25, "54321987654321", 1234, null);
 		user.userInfos.add(user1);
+		user.userInfos.add(user3);
+
 		Hana hana= new Hana();
 		Gookmin gookmin= new Gookmin();
 		Sinhan sinhan= new Sinhan();
@@ -233,12 +236,53 @@ public class Main {
 			}
 			case "3.계좌송금":
 			{
-				System.out.println("계좌송금");
+
+				String accountNum1=JOptionPane.showInputDialog(null,"계좌송금창","본인의 계좌번호를 입력하십시오.");//송금하는 계좌
+				for(User i:user.userInfos) {
+					if(accountNum1.equals(i.getAccountNumber())) {
+						int password1=(Integer.parseInt(JOptionPane.showInputDialog(null,"계좌비밀번호를 입력하십시오.")));
+						if(password1==i.getAccountPassword()) {
+							String accountNum2=JOptionPane.showInputDialog(null,"계좌송금창", "송금보내시는 계좌번호를 입력하십시오.");//송금받는 게좌
+							for(User z:user.userInfos) {
+								if(accountNum2.equals(z.getAccountNumber())) {
+									long remittance=(Long.parseLong(JOptionPane.showInputDialog(null,"송금창","송금하실 금액을 입력하십시오.", JOptionPane.PLAIN_MESSAGE)));
+									if(i.getBalance()<remittance) {
+										System.out.println("잔액이 부족합니다.");
+										JOptionPane.showMessageDialog(null,"잔액이 부족합니다.","안내창",JOptionPane.WARNING_MESSAGE);
+									}else {
+										i.setBalance(i.getBalance()-remittance);
+										z.setBalance(z.getBalance()+remittance);						
+									}
+									JOptionPane.showMessageDialog(null,i.getName()+"님의 송금 후 잔액은 "+i.getBalance()+"원 입니다.","안내창",JOptionPane.PLAIN_MESSAGE);
+									JOptionPane.showMessageDialog(null,z.getName()+"님의 송금받은 후 잔액은 "+z.getBalance()+"원 입니다.","안내창",JOptionPane.PLAIN_MESSAGE);
+								}
+							}
+						}
+					}
+				}
+
 				break;
 			}
 			case "4.분실신고":
 			{
-				System.out.println("분실신고");
+				String accountNum=JOptionPane.showInputDialog(null,"분실신고창","분실신고 하실 계좌번호를 입력하십시오.");
+				int index=0;
+				for(User u:user.userInfos) {
+					if(accountNum.equals(u.getAccountNumber())) {
+						int password=(Integer.parseInt(JOptionPane.showInputDialog(null, "분실신고창", "계좌비밀번호를 입력하십시오.", JOptionPane.PLAIN_MESSAGE)));
+						if(password==u.getAccountPassword()) {
+							int check=JOptionPane.showConfirmDialog(null, "계좌정보가 삭제처리됩니다. 정말 삭제하시겠습니까?","확인창", JOptionPane.OK_CANCEL_OPTION);
+							if(check==0) {
+								user.userInfos.remove(index);
+								JOptionPane.showInternalMessageDialog(null, "삭체처리 됐습니다.");
+							}else {
+								JOptionPane.showInternalMessageDialog(null, "다시오십시오.");
+								break;
+							}
+						}
+					}index++;
+					System.out.println(u.getAccountNumber());
+				}
 				break;
 			}
 			case "5.회원가입":
@@ -258,9 +302,7 @@ public class Main {
 			bool=false;
 	}
 	
-		for(User u:user.userInfos) {
-			System.out.println(u);
-		}
+
  }
 	
 }
