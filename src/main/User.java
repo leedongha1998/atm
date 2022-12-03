@@ -7,7 +7,6 @@ public class User extends Bank {
 	private int age;
 	private String accountNumber;
 	private int accountPassword;
-	
 	ArrayList<User> userInfos = new ArrayList<>();
 	
 	
