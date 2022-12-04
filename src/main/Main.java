@@ -87,6 +87,7 @@ public class Main {
 			break;
 		}
 		case "5.회원가입":{
+			atm.creatAccount(user);
 			break;
 		}
 		case "6.종료":{

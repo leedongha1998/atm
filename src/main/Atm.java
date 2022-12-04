@@ -108,7 +108,7 @@ public class Atm {
 	}
 	/**
 	 * 
-	 * 송금절차
+	 * 송금절차 하나
 	 */
 	public void withdrawalHana(User user) {
 		Hana hana= new Hana();
@@ -123,6 +123,10 @@ public class Atm {
 		}
 	}
 	
+	/**
+	 * 
+	 * 송금절차 국민
+	 */
 	public void withdrawalGookmin(User user) {
 		Gookmin gookmin= new Gookmin();
 		alert("수수료는 "+gookmin.getCommission()+"% 입니다.");
@@ -136,6 +140,10 @@ public class Atm {
 		}
 	}
 	
+	/**
+	 * 
+	 * 송금절차 신한
+	 */
 	public void withdrawalSinhan(User user) {
 		Sinhan sinhan= new Sinhan();
 		alert("수수료는 "+sinhan.getCommission()+"% 입니다.");
@@ -203,6 +211,21 @@ public class Atm {
 				}
 			}
 		}return null;
+	}
+	/**
+	 * 
+	 * 회원가입
+	 */
+	public void creatAccount(User user) {
+		String bankName=JOptionPane.showInputDialog(null,"은행입력창","사용하실 은행을 입력하십시오.");
+		String name=JOptionPane.showInputDialog(null,"이름입력창","이름을 입력하시오.");
+		int age=(Integer.parseInt(JOptionPane.showInputDialog(null,"나이입력창","나이를 입력하시오.")));
+		String account=user.createAccountNum();
+		JOptionPane.showInternalMessageDialog(null, "새로운 계좌번호는 "+account+" 입니다,", "계좌번호창",JOptionPane.PLAIN_MESSAGE );
+		int password=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호","원하시는 비밀번호를 입력하시오.")));
+		User user2 = new User(bankName, 0, 0, 0, name, age, account, password, null);
+		user.userInfos.add(user2);
+		alert("선택하신 은행:"+bankName+"\n"+"회원님 성함:"+name+"\n"+"나이:"+age+"\n"+"계좌번호:"+account+"\n"+"계좌비밀번호:"+password+" 입니다");
 	}
 }
 
