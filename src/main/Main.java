@@ -29,71 +29,69 @@ public class Main {
 			
 			switch(atm.dw()) {
 			case "1.입금":{
-				
 				switch(atm.chooseBank()) {
 				case 0 :{
-					if(atm.certificate(user.userInfos) !=null) {
-						atm.deposit(atm.certificate(user.userInfos));
-					}else {
-						atm.alert("오류");
-					}
+					atm.deposit(atm.certificate(user.userInfos));
 					break;
-				}
+					}
 				case 1 :{
-					if(atm.certificate(user.userInfos) !=null) {
-						atm.deposit(atm.certificate(user.userInfos));
-					}else {
-						atm.alert("오류");
-					}
+					atm.deposit(atm.certificate(user.userInfos));
 					break;
-				}
+					}
 				case 2 :{
-					if(atm.certificate(user.userInfos) !=null) {
-						atm.deposit(atm.certificate(user.userInfos));
-					}else {
-						atm.alert("오류");
-					}
+					atm.deposit(atm.certificate(user.userInfos));
 					break;
-				}
+					}
 				case 3 :{
 					atm.alert("저희 ATM에서 지원하지 않는 은행사입니다.");
 					break;
-				}
-				}
+					}
+				}break;
 			}
 			case "2.출금":{
 				switch(atm.chooseBank()) {
-				case 0 :{}
-				case 1 :{}
-				case 2 :{}
+				case 0 :{
+					atm.withdrawalHana(atm.certificate(user.userInfos));
+					break;
+					}
+				case 1 :{
+					atm.withdrawalGookmin(atm.certificate(user.userInfos));
+					break;
+					}
+				case 2 :{
+					atm.withdrawalSinhan(atm.certificate(user.userInfos));
+					break;
+					}
 				case 3 :{
 					atm.alert("저희 ATM에서 지원하지 않는 은행사입니다. ");
 					break;
-				}
-				}
-				
-				break;
+					}
+				}break;
 			}
+			
 			case "3.뒤로가기":{
 				atm.startAtm();
 				break;
-			}
+				}
 			}
 		}
 		case "2.통장정리":{
 			break;
 		}
 		case "3.계좌송금":{
+			atm.remittance(user.userInfos);
 			break;
 		}
 		case "4.분실신고":{
+			atm.reportLose(user);
 			break;
 		}
 		case "5.회원가입":{
+			atm.creatAccount(user);
 			break;
 		}
 		case "6.종료":{
-			atm.alert("방문해주셔서 감사합니다.");
+			atm.alert("방문해주셔서 감사합니다. 다음에 다시 방문해주세요.");
 			break;
 		}
 		}
