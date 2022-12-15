@@ -1,9 +1,5 @@
 package main;
 
-import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
-
 public class Main {
 	
 
@@ -11,10 +7,12 @@ public class Main {
 	
 	public static void main(String[] args) {	
 		User user = new User();
-		User user1 = new User("하나은행", 1000, 0, 0, "임성현", 25, "12345678912345", 1234, null);
+		User user1 = new User("국민은행", 100000000, 0, 0, "임성현", 25, "12345678912345", 1111, null);
 		User user3 = new User("하나은행", 12000, 0, 0, "이동하", 25, "54321987654321", 1234, null);
+		User user4 = new User("신한은행", 1122000, 0, 0, "이동하", 25, "12345678998765", 1234, null);
 		user.userInfos.add(user1);
 		user.userInfos.add(user3);
+		user.userInfos.add(user4);
 		Atm atm= new Atm();
 		
 
@@ -31,15 +29,30 @@ public class Main {
 			case "1.입금":{
 				switch(atm.chooseBank()) {
 				case 0 :{
-					atm.deposit(atm.certificate(user.userInfos));
+					User userCheck=atm.certificate(user.userInfos, "하나은행");
+					if(userCheck!=null) {
+						atm.deposit(userCheck);
+					}else {
+						break;
+					}
 					break;
 					}
 				case 1 :{
-					atm.deposit(atm.certificate(user.userInfos));
+					User userCheck=atm.certificate(user.userInfos, "국민은행");
+					if(userCheck!=null) {
+						atm.deposit(userCheck);
+					}else {
+						break;
+					}
 					break;
 					}
 				case 2 :{
-					atm.deposit(atm.certificate(user.userInfos));
+					User userCheck=atm.certificate(user.userInfos, "신한은행");
+					if(userCheck!=null) {
+						atm.deposit(userCheck);
+					}else {
+						break;
+					}
 					break;
 					}
 				case 3 :{
@@ -51,16 +64,34 @@ public class Main {
 			case "2.출금":{
 				switch(atm.chooseBank()) {
 				case 0 :{
-					atm.withdrawalHana(atm.certificate(user.userInfos));
-					break;
+					User userCheck=atm.certificate(user.userInfos,"하나은행");
+					if(userCheck!=null) {
+						atm.withdrawal(userCheck,hana.getCommission());
+						break;
+					}else {
+						break;
+					}
+
 					}
 				case 1 :{
-					atm.withdrawalGookmin(atm.certificate(user.userInfos));
-					break;
+					User userCheck=atm.certificate(user.userInfos,"국민은행");
+					if(userCheck!=null) {
+						atm.withdrawal(userCheck,gookmin.getCommission());
+						break;
+					}else {
+						break;
+					}
+
 					}
 				case 2 :{
-					atm.withdrawalSinhan(atm.certificate(user.userInfos));
-					break;
+					User userCheck=atm.certificate(user.userInfos,"신한은행");
+					if(userCheck!=null) {
+						atm.withdrawal(userCheck,sinhan.getCommission());
+						break;
+					}else {
+						break;
+					}
+
 					}
 				case 3 :{
 					atm.alert("저희 ATM에서 지원하지 않는 은행사입니다. ");
@@ -71,7 +102,6 @@ public class Main {
 			
 			case "3.뒤로가기":{
 				atm.startAtm();
-				break;
 				}
 			}
 		}

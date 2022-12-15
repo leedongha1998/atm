@@ -82,19 +82,60 @@ public class Atm {
 	 * 
 	 */
 	
-	public User certificate(ArrayList<User> userInfos) {
+//	public User certificate(ArrayList<User> userInfos,String bankName) {
+//		boolean check=false;
+//		String accountNum=JOptionPane.showInputDialog(null,"계좌번호입력창","***-******-***** 형식으로 입력하시오.");
+//		for(User u:userInfos) {
+//			System.out.println(u.getAccountNumber());
+//			if(u.getAccountNumber().equals(accountNum)) {
+//				if(u.getBankName().equals(bankName)) {
+//					 int accountPass=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호입력창","비밀번호 4자리를 입력하시오.")));
+//					 if(u.getAccountPassword()==accountPass) {
+//						 User user=new User(u.getBankName(),u.getBalance(), u.getDeposit(), u.getWithdrawal(), u.getName(), u.getAge(), accountNum, accountPass,u.userInfos);
+//						 return user; 
+//						 }else {
+//							 alert("정보가 일치하지 않습니다.");
+//							 break;
+//						 }
+//				 	}else {
+//				 		continue;
+//				 }
+//			}else {
+//				continue;
+//			}
+//		}return null;
+//	}
+
+
+
+
+	public User certificate(ArrayList<User> userInfos,String bankName) {
 		String accountNum=JOptionPane.showInputDialog(null,"계좌번호입력창","***-******-***** 형식으로 입력하시오.");
-		for(User u:userInfos) {
-			if(u.getAccountNumber().equals(accountNum)) {
-				 int accountPass=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호입력창","비밀번호 4자리를 입력하시오.")));
-				 if(u.getAccountPassword()==accountPass) {
-					 User user=new User(u.getBankName(),u.getBalance(), u.getDeposit(), u.getWithdrawal(), u.getName(), u.getAge(), accountNum, accountPass,u.userInfos);
-					 return user;
-				 }else {
-					 alert("정보가 일치하지 않습니다.");
-				 }
+		for(int i=0;i<userInfos.size();i++) {
+			if(userInfos.get(i).getAccountNumber().equals(accountNum)) {
+					if(userInfos.get(i).getBankName().equals(bankName)) {
+						int accountPass=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호입력창","비밀번호 4자리를 입력하시오.")));
+						if(userInfos.get(i).getAccountPassword()==accountPass) {
+							 User user=new User(userInfos.get(i).getBankName(),userInfos.get(i).getBalance(), userInfos.get(i).getDeposit(),userInfos.get(i).getWithdrawal(), userInfos.get(i).getName(), userInfos.get(i).getAge(), accountNum, accountPass,userInfos.get(i).userInfos);
+							 return user; 
+						}else {
+							alert("정보가 일치하지 않습니다.");
+							break;
+						}
+					}else {
+						alert("정보가 일치하지 않습니다.");
+						break;
+					}
 			}
-		}return null;
+			else {
+				if(userInfos.size()==i+1) {
+					alert("일치하는 정보가 없습니다.");
+				}else {
+					continue;
+				}
+			}
+		}
+		return null;
 	}
 	
 
@@ -103,59 +144,40 @@ public class Atm {
 	 */
 	public void deposit(User user) {
 			long deposit=(Long.parseLong(JOptionPane.showInputDialog(null,"입금액","입금하실 금액을 입력하시오.")));
-			 user.setBalance(user.getBalance()+deposit); 
-			 JOptionPane.showInternalMessageDialog(null, "잔액은 "+user.getBalance()+"원 입니다.", "안내창",JOptionPane.PLAIN_MESSAGE );
+			if(deposit>1000000) {
+				alert("하루 입금 가능액이 초과되었습니다. 하루 최대 입금 가능액:1000000원");
+			}else {
+				user.setBalance(user.getBalance()+deposit);
+				alert("입금 후 잔액은 "+user.getBalance()+" 입니다.");
+				alert("방문해주셔서 감사합니다. 다음에 다시 방문해주세요.");
+				
+			}
+			
 	}
 	/**
 	 * 
-	 * 송금절차 하나
+	 * 출금절차 
 	 */
-	public void withdrawalHana(User user) {
-		Hana hana= new Hana();
-		alert("수수료는 "+hana.getCommission()+"% 입니다.");
+	public void withdrawal(User user,double commission) {
+		
+		alert("수수료는 "+commission+"% 입니다.");
 		long withdrawal=(Long.parseLong(JOptionPane.showInputDialog(null,"출금액","출금하실 금액을 입력하시오.")));
-		if(user.getBalance()<=withdrawal) {
+		if(user.getBalance()<withdrawal) {
 			alert("잔액이 부족합니다.");
 		}else {
-			user.setBalance((long) (user.getBalance()-withdrawal*(1+hana.getCommission())));
-			alert("잔액은 "+user.getBalance()+"입니다.");
-			alert("방문해주셔서 감사합니다. 다음에 다시 방문해주세요.");
+			if(withdrawal>1000000) {
+				alert("하루 송금 가능액이 초과되었습니다. 하루 최대 송금 가능액:1000000원");
+			}else {
+				user.setBalance((long) (user.getBalance()-withdrawal*(1+commission)));
+				alert("잔액은 "+user.getBalance()+"입니다.");
+				alert("방문해주셔서 감사합니다. 다음에 다시 방문해주세요.");
+			}
+			
 		}
 	}
 	
-	/**
-	 * 
-	 * 송금절차 국민
-	 */
-	public void withdrawalGookmin(User user) {
-		Gookmin gookmin= new Gookmin();
-		alert("수수료는 "+gookmin.getCommission()+"% 입니다.");
-		long withdrawal=(Long.parseLong(JOptionPane.showInputDialog(null,"출금액","출금하실 금액을 입력하시오.")));
-		if(user.getBalance()<=withdrawal) {
-			alert("잔액이 부족합니다.");
-		}else {
-			user.setBalance((long) (user.getBalance()-withdrawal*(1+gookmin.getCommission())));
-			alert("잔액은 "+user.getBalance()+"입니다.");
-			alert("방문해주셔서 감사합니다. 다음에 다시 방문해주세요.");
-		}
-	}
-	
-	/**
-	 * 
-	 * 송금절차 신한
-	 */
-	public void withdrawalSinhan(User user) {
-		Sinhan sinhan= new Sinhan();
-		alert("수수료는 "+sinhan.getCommission()+"% 입니다.");
-		long withdrawal=(Long.parseLong(JOptionPane.showInputDialog(null,"출금액","출금하실 금액을 입력하시오.")));
-		if(user.getBalance()<=withdrawal) {
-			alert("잔액이 부족합니다.");
-		}else {
-			user.setBalance((long) (user.getBalance()-withdrawal*(1+sinhan.getCommission())));
-			alert("잔액은 "+user.getBalance()+"입니다.");
-			alert("방문해주셔서 감사합니다. 다음에 다시 방문해주세요.");
-		}
-	}
+
+
 	
 
 	/**
@@ -173,12 +195,20 @@ public class Atm {
 					if(check==0) {
 						user.userInfos.remove(index);
 						alert(u.getName()+"님의 계좌번호가 삭제되었습니다.");
+						alert("방문해주셔서 감사합니다. 다음에 다시 방문해주세요.");
+						break;
 					}else {
 						alert("방문해주셔서 감사합니다. 다음에 다시 방문해주세요.");
 						break;
 					}
+				}else {
+					alert("정보가 일치하지 않습니다.");
 				}
-			}index++;
+			}else {
+				alert("일치하는 정보가 없습니다.");
+				break;
+			}
+			index++;
 		}
 	}
 	
@@ -217,15 +247,39 @@ public class Atm {
 	 * 회원가입
 	 */
 	public void creatAccount(User user) {
-		String bankName=JOptionPane.showInputDialog(null,"은행입력창","사용하실 은행을 입력하십시오.");
+		int bankName=chooseBank();
+		switch(bankName) {
+		case 0:{
+			user.setBankName("하나은행");
+		}
+		case 1:{
+			user.setBankName("국민은행");
+		}
+		case 2:{
+			user.setBankName("신한은행");
+		}
+		case 3:{
+			alert("저희 ATM에서 회원가입 불가능한 은헹입니다.");
+		}
+		}
 		String name=JOptionPane.showInputDialog(null,"이름입력창","이름을 입력하시오.");
 		int age=(Integer.parseInt(JOptionPane.showInputDialog(null,"나이입력창","나이를 입력하시오.")));
+		if(age>110||age<10) {
+			alert("정보를 잘못입력하셨습니다.");
+			return;
+		}else {
 		String account=user.createAccountNum();
-		JOptionPane.showInternalMessageDialog(null, "새로운 계좌번호는 "+account+" 입니다,", "계좌번호창",JOptionPane.PLAIN_MESSAGE );
+		alert("새로운 계좌번호는 "+account+" 입니다,");
 		int password=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호","원하시는 비밀번호를 입력하시오.")));
-		User user2 = new User(bankName, 0, 0, 0, name, age, account, password, null);
-		user.userInfos.add(user2);
-		alert("선택하신 은행:"+bankName+"\n"+"회원님 성함:"+name+"\n"+"나이:"+age+"\n"+"계좌번호:"+account+"\n"+"계좌비밀번호:"+password+" 입니다");
+		if(password>9999||password<1000) {
+			alert("정보를 잘못입력하셨습니다.");
+			return;
+		}else {
+			User user2 = new User(bankName, 0, 0, 0, name, age, account, password, null);
+			user.userInfos.add(user2);
+			alert("선택하신 은행:"+bankName+"\n"+"회원님 성함:"+name+"\n"+"나이:"+age+"\n"+"계좌번호:"+account+"\n"+"계좌비밀번호:"+password+" 입니다");
+			}
+		}
 	}
 }
 

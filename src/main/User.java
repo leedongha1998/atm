@@ -27,6 +27,11 @@ public class User extends Bank {
 		this.accountPassword = accountPassword;
 		this.userInfos = userInfos;
 	}
+	public User(int bankName, int i, int j, int k, String name2, int age2, String account, int password,
+			Object object) {
+		
+	}
+
 	public String getName() {
 		return name;
 	}
