@@ -99,7 +99,6 @@ public class Main {
 					}
 				}break;
 			}
-			
 			case "3.뒤로가기":{
 				atm.startAtm();
 				}
