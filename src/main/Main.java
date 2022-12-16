@@ -9,7 +9,7 @@ public class Main {
 		User user = new User();
 		User user1 = new User("국민은행", 100000000, 0, 0, "임성현", 25, "12345678912345", 1111, null);
 		User user3 = new User("하나은행", 12000, 0, 0, "이동하", 25, "54321987654321", 1234, null);
-		User user4 = new User("신한은행", 1122000, 0, 0, "이동하", 25, "12345678998765", 1234, null);
+		User user4 = new User("신한은행", 1122000, 0, 0, "이성하", 25, "12345678998765", 1234, null);
 		user.userInfos.add(user1);
 		user.userInfos.add(user3);
 		user.userInfos.add(user4);
