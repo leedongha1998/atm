@@ -31,6 +31,13 @@ public class User extends Bank {
 			Object object) {
 		
 	}
+	/**
+	 * 
+	 * @atm 회원가입 파라미터.
+	 */
+	public User(String bankNames, int i, int j, int k, String name2, String age2, String account, String password,
+			Object object) {
+	}
 
 	public String getName() {
 		return name;

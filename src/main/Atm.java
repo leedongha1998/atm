@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
@@ -175,11 +176,6 @@ public class Atm {
 			
 		}
 	}
-	
-
-
-	
-
 	/**
 	 * 
 	 * 분실신고
@@ -189,7 +185,7 @@ public class Atm {
 		int index=0;
 		for(User u:user.userInfos) {
 			if(accountNum.equals(u.getAccountNumber())) {
-				int password=(Integer.parseInt(JOptionPane.showInputDialog(null, "분실신고창", "계좌비밀번호를 입력하십시오.", JOptionPane.PLAIN_MESSAGE)));
+				int password=(Integer.parseInt(JOptionPane.showInputDialog(null, "계좌비밀번호를 입력하십시오.", "분실신고창", JOptionPane.PLAIN_MESSAGE)));
 				if(password==u.getAccountPassword()) {
 					int check=JOptionPane.showConfirmDialog(null, "계좌정보가 삭제처리됩니다. 정말 삭제하시겠습니까?","확인창", JOptionPane.OK_CANCEL_OPTION);
 					if(check==0) {
@@ -198,15 +194,18 @@ public class Atm {
 						alert("방문해주셔서 감사합니다. 다음에 다시 방문해주세요.");
 						break;
 					}else {
-						alert("방문해주셔서 감사합니다. 다음에 다시 방문해주세요.");
+						alert("방문해주셔서 감사합니다. 다음에 다시 방문해주세요.");//계좌삭제 반대
 						break;
 					}
 				}else {
-					alert("정보가 일치하지 않습니다.");
+					alert("정보가 일치하지 않습니다.");//비밀번호 불일치
 				}
 			}else {
-				alert("일치하는 정보가 없습니다.");
-				break;
+				if(user.userInfos.size()==index+1) {
+					alert("일치하는 정보가 없습니다");// 계좌번호 불일치
+				}else {
+				continue;
+				}
 			}
 			index++;
 		}
@@ -242,45 +241,80 @@ public class Atm {
 			}
 		}return null;
 	}
+	
+	/**
+	 * 정규표현식 
+	 */
+	public boolean matches(String pattern,String str) {
+		boolean result=Pattern.matches(pattern, str);
+		return result;
+	}
+	
 	/**
 	 * 
 	 * 회원가입
 	 */
 	public void creatAccount(User user) {
 		int bankName=chooseBank();
+		String bankNames=null;
 		switch(bankName) {
 		case 0:{
-			user.setBankName("하나은행");
+			 bankNames="하나은행";
+			break;
 		}
 		case 1:{
-			user.setBankName("국민은행");
+			 bankNames="국민은행";
+			break;
 		}
 		case 2:{
-			user.setBankName("신한은행");
+			 bankNames="신한은행";
+			break;
 		}
 		case 3:{
 			alert("저희 ATM에서 회원가입 불가능한 은헹입니다.");
+			break;
 		}
 		}
 		String name=JOptionPane.showInputDialog(null,"이름입력창","이름을 입력하시오.");
-		int age=(Integer.parseInt(JOptionPane.showInputDialog(null,"나이입력창","나이를 입력하시오.")));
-		if(age>110||age<10) {
-			alert("정보를 잘못입력하셨습니다.");
-			return;
-		}else {
-		String account=user.createAccountNum();
-		alert("새로운 계좌번호는 "+account+" 입니다,");
-		int password=(Integer.parseInt(JOptionPane.showInputDialog(null,"비밀번호","원하시는 비밀번호를 입력하시오.")));
-		if(password>9999||password<1000) {
-			alert("정보를 잘못입력하셨습니다.");
-			return;
-		}else {
-			User user2 = new User(bankName, 0, 0, 0, name, age, account, password, null);
-			user.userInfos.add(user2);
-			alert("선택하신 은행:"+bankName+"\n"+"회원님 성함:"+name+"\n"+"나이:"+age+"\n"+"계좌번호:"+account+"\n"+"계좌비밀번호:"+password+" 입니다");
+		if(matches("^[가-힣]*$",name)==true){
+				String age=JOptionPane.showInputDialog(null,"나이입력창","나이를 입력하시오.");
+				if(matches("^[0-9]*$",age)==true){
+				int	a=Integer.parseInt(age);
+				if(a>110||a<10) {
+					alert("가입 가능한 연령이 아닙니다.");//가능한 가입 나이 초과
+					return;
+					}
+					else {
+						String account=user.createAccountNum();
+						alert("새로운 계좌번호는 "+account+" 입니다,");
+						String password=JOptionPane.showInputDialog(null,"비밀번호","원하시는 비밀번호를 입력하시오.");
+						if(matches("^[0-9]*$",password)) {
+							int p=Integer.parseInt(password);
+							if(p>9999||p<1000) {
+								alert("비밀번호양식은 숫자 4자리입니다.");//비밀번호 숫자 제한
+								return;
+								}
+								else {
+									User user2 = new User(bankNames, 0, 0, 0, name, age, account, password, null);
+									user.userInfos.add(user2);
+									alert("선택하신 은행:"+bankNames+"\n"+"회원님 성함:"+name+"\n"+"나이:"+age+"\n"+"계좌번호:"+account+"\n"+"계좌비밀번호:"+password+" 입니다");
+									alert("방문해주셔서 감사합니다. 다음에 다시 방문해주세요.");
+									return;
+								}
+						}else {
+							alert("정보를 잘못 입력하셨습니다.");//비밀번호 문자로 입력
+							return;
+						}
+					}
+				}		
+				else {
+					alert("나이 정보를 잘못입력하셨습니다");//나이 문자로 입력
+					return;
+				}
+			}else {
+				alert("이름은 한글로 작성해야합니다.");//이름 영어 입력
+				return;
 			}
 		}
 	}
-}
-
 	
